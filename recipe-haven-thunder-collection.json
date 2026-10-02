@@ -1,0 +1,81 @@
+{
+  "clientName": "Thunder Client",
+  "collectionName": "Recipe Haven API",
+  "collectionId": "recipe-haven-thunder-collection",
+  "dateExported": "2026-10-02T00:00:00.000Z",
+  "version": "1.1",
+  "folders": [],
+  "requests": [
+    {
+      "name": "Health Check",
+      "method": "GET",
+      "url": "http://localhost:5005/api/health"
+    },
+    {
+      "name": "Register User",
+      "method": "POST",
+      "url": "http://localhost:5005/api/auth/register",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Chef Chloe\",\n  \"email\": \"chloe@recipehaven.com\",\n  \"password\": \"password123\"\n}"
+      }
+    },
+    {
+      "name": "Login User",
+      "method": "POST",
+      "url": "http://localhost:5005/api/auth/login",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"email\": \"chloe@recipehaven.com\",\n  \"password\": \"password123\"\n}"
+      }
+    },
+    {
+      "name": "Get Authenticated User Profile",
+      "method": "GET",
+      "url": "http://localhost:5005/api/auth/me",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{jwt_token}}" }]
+    },
+    {
+      "name": "Get All Recipes",
+      "method": "GET",
+      "url": "http://localhost:5005/api/recipes?search=&category=All"
+    },
+    {
+      "name": "Get Recipe by ID",
+      "method": "GET",
+      "url": "http://localhost:5005/api/recipes/{{recipe_id}}"
+    },
+    {
+      "name": "Get My Recipes",
+      "method": "GET",
+      "url": "http://localhost:5005/api/recipes/my-recipes",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{jwt_token}}" }]
+    },
+    {
+      "name": "Submit Recipe Rating (1-5)",
+      "method": "POST",
+      "url": "http://localhost:5005/api/recipes/{{recipe_id}}/rate",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{jwt_token}}" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"value\": 5\n}"
+      }
+    },
+    {
+      "name": "Get Average Rating (Dynamic Aggregation)",
+      "method": "GET",
+      "url": "http://localhost:5005/api/recipes/{{recipe_id}}/average-rating"
+    },
+    {
+      "name": "Delete Recipe (Owner Only)",
+      "method": "DELETE",
+      "url": "http://localhost:5005/api/recipes/{{recipe_id}}",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{jwt_token}}" }]
+    }
+  ]
+}

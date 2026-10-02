@@ -1,0 +1,234 @@
+{
+  "info": {
+    "name": "Recipe Haven API Collection",
+    "description": "Comprehensive Postman Collection for Recipe Haven Full-Stack Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5005/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "recipeId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5005/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5005",
+          "path": ["api", "health"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Pastry Chef Marie\",\n  \"email\": \"marie@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "register"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"chloe@recipehaven.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Get Current User Profile",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "me"]
+        }
+      }
+    },
+    {
+      "name": "Recipes - Get All Recipes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/recipes?search=&category=All",
+          "host": ["{{baseUrl}}"],
+          "path": ["recipes"],
+          "query": [
+            { "key": "search", "value": "" },
+            { "key": "category", "value": "All" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Recipes - Get Single Recipe by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/recipes/{{recipeId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["recipes", "{{recipeId}}"]
+        }
+      }
+    },
+    {
+      "name": "Recipes - Create Recipe (with Image)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "title", "value": "Matcha Crepe Cake", "type": "text" },
+            { "key": "description", "value": "Delicate layers of paper-thin matcha crepes and vanilla cream.", "type": "text" },
+            { "key": "category", "value": "Dessert", "type": "text" },
+            { "key": "prepTime", "value": "45 mins", "type": "text" },
+            { "key": "servings", "value": "6 slices", "type": "text" },
+            { "key": "ingredients", "value": "[\"2 cups cake flour\", \"2 tbsp matcha powder\", \"4 eggs\", \"2 cups whole milk\"]", "type": "text" },
+            { "key": "steps", "value": "[\"Whisk crepe batter\", \"Fry paper-thin layers\", \"Layer with whipped cream and chill\"]", "type": "text" },
+            { "key": "image", "type": "file", "src": "" }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/recipes",
+          "host": ["{{baseUrl}}"],
+          "path": ["recipes"]
+        }
+      }
+    },
+    {
+      "name": "Recipes - Update Recipe (Owner Only)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "title", "value": "Updated Gourmet Recipe Title", "type": "text" },
+            { "key": "description", "value": "Updated recipe description with special chef notes.", "type": "text" }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/recipes/{{recipeId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["recipes", "{{recipeId}}"]
+        }
+      }
+    },
+    {
+      "name": "Recipes - Delete Recipe (Owner Only)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/recipes/{{recipeId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["recipes", "{{recipeId}}"]
+        }
+      }
+    },
+    {
+      "name": "Recipes - Get My Recipes",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/recipes/my-recipes",
+          "host": ["{{baseUrl}}"],
+          "path": ["recipes", "my-recipes"]
+        }
+      }
+    },
+    {
+      "name": "Ratings - Submit Rating (1-5)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"value\": 5\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/recipes/{{recipeId}}/rate",
+          "host": ["{{baseUrl}}"],
+          "path": ["recipes", "{{recipeId}}", "rate"]
+        }
+      }
+    },
+    {
+      "name": "Ratings - Get Dynamic Average Rating",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/recipes/{{recipeId}}/average-rating",
+          "host": ["{{baseUrl}}"],
+          "path": ["recipes", "{{recipeId}}", "average-rating"]
+        }
+      }
+    },
+    {
+      "name": "Ratings - Get All Ratings for Recipe",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/recipes/{{recipeId}}/ratings",
+          "host": ["{{baseUrl}}"],
+          "path": ["recipes", "{{recipeId}}", "ratings"]
+        }
+      }
+    }
+  ]
+}
